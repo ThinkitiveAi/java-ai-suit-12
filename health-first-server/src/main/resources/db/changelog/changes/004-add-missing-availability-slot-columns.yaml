@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004
+      author: healthfirst
+      comment: Add missing columns to availability_slots table
+      changes:
+        - addColumn:
+            tableName: availability_slots
+            columns:
+              - column:
+                  name: booking_timestamp
+                  type: timestamp
+              - column:
+                  name: reason_for_visit
+                  type: varchar(200)
+              - column:
+                  name: cancelled_by_provider
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: requires_confirmation
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: confirmation_timestamp
+                  type: timestamp
+              - column:
+                  name: no_show
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: check_in_timestamp
+                  type: timestamp
+              - column:
+                  name: completed
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: completion_timestamp
+                  type: timestamp
+              - column:
+                  name: provider_notes
+                  type: varchar(1000)
+              - column:
+                  name: duration_minutes
+                  type: integer 

@@ -330,6 +330,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         // Skip JWT validation for public endpoints
         List<String> publicPaths = List.of(
+            "/",
+            "/favicon.ico",
+            "/robots.txt",
             "/api/v1/provider/register",
             "/api/v1/provider/verify",
             "/api/v1/provider/resend-verification",

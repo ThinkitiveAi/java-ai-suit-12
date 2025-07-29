@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005
+      author: healthfirst
+      comment: Add missing columns to provider_availability table
+      changes:
+        - addColumn:
+            tableName: provider_availability
+            columns:
+              - column:
+                  name: title
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(500)
+              - column:
+                  name: slot_duration_minutes
+                  type: integer
+                  defaultValueNumeric: 30
+              - column:
+                  name: buffer_time_minutes
+                  type: integer
+                  defaultValueNumeric: 0
+              - column:
+                  name: time_zone
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: location_details
+                  type: varchar(200)
+              - column:
+                  name: max_advance_booking_days
+                  type: integer
+                  defaultValueNumeric: 90
+              - column:
+                  name: min_advance_booking_hours
+                  type: integer
+                  defaultValueNumeric: 2
+              - column:
+                  name: allow_online_booking
+                  type: boolean
+                  defaultValueBoolean: true
+              - column:
+                  name: requires_approval
+                  type: boolean
+                  defaultValueBoolean: false 

@@ -37,6 +37,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 // Public endpoints - no authentication required
                 .requestMatchers(
+                        "/", "/favicon.ico", "/robots.txt",
                     "/api/v1/provider/register",
                     "/api/v1/provider/verify",
                     "/api/v1/provider/resend-verification",

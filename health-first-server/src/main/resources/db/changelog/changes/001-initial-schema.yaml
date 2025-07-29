@@ -1,0 +1,680 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: healthfirst
+      comment: Enable UUID extension
+      changes:
+        - sql:
+            sql: CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+  - changeSet:
+      id: 002
+      author: healthfirst
+      comment: Create providers table
+      changes:
+        - createTable:
+            tableName: providers
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: uuid_generate_v4()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: phone_number
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password_hash
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: specialization
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: license_number
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: years_of_experience
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: clinic_street
+                  type: varchar(200)
+              - column:
+                  name: clinic_city
+                  type: varchar(100)
+              - column:
+                  name: clinic_state
+                  type: varchar(50)
+              - column:
+                  name: clinic_zip
+                  type: varchar(10)
+              - column:
+                  name: verification_status
+                  type: varchar(20)
+                  defaultValue: PENDING
+                  constraints:
+                    nullable: false
+              - column:
+                  name: license_document_url
+                  type: varchar(500)
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: email_verified
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: verification_token
+                  type: varchar(255)
+              - column:
+                  name: verification_token_expires_at
+                  type: timestamp
+              - column:
+                  name: failed_login_attempts
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: locked_until
+                  type: timestamp
+              - column:
+                  name: last_login
+                  type: timestamp
+              - column:
+                  name: login_count
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_failed_attempt
+                  type: timestamp
+              - column:
+                  name: suspicious_activity_score
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 003
+      author: healthfirst
+      comment: Create patients table
+      changes:
+        - createTable:
+            tableName: patients
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: uuid_generate_v4()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: phone_number
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password_hash
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_birth
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address_street
+                  type: varchar(200)
+              - column:
+                  name: address_city
+                  type: varchar(100)
+              - column:
+                  name: address_state
+                  type: varchar(50)
+              - column:
+                  name: address_zip
+                  type: varchar(10)
+              - column:
+                  name: emergency_contact_name
+                  type: varchar(100)
+              - column:
+                  name: emergency_contact_phone
+                  type: varchar(20)
+              - column:
+                  name: emergency_contact_relationship
+                  type: varchar(50)
+              - column:
+                  name: insurance_provider
+                  type: varchar(100)
+              - column:
+                  name: insurance_policy_number
+                  type: varchar(50)
+              - column:
+                  name: insurance_group_number
+                  type: varchar(50)
+              - column:
+                  name: insurance_plan_name
+                  type: varchar(100)
+              - column:
+                  name: insurance_member_id
+                  type: varchar(100)
+              - column:
+                  name: email_verified
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_verified
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email_verification_token
+                  type: varchar(255)
+              - column:
+                  name: email_verification_expires_at
+                  type: timestamp
+              - column:
+                  name: phone_verification_otp
+                  type: varchar(10)
+              - column:
+                  name: phone_verification_expires_at
+                  type: timestamp
+              - column:
+                  name: phone_verification_attempts
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: marketing_consent
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data_sharing_consent
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_login
+                  type: timestamp
+              - column:
+                  name: failed_login_attempts
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: login_count
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_failed_attempt
+                  type: timestamp
+              - column:
+                  name: locked_until
+                  type: timestamp
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+
+  - changeSet:
+      id: 004
+      author: healthfirst
+      comment: Create provider_availability table
+      changes:
+        - createTable:
+            tableName: provider_availability
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: uuid_generate_v4()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: provider_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_date
+                  type: date
+              - column:
+                  name: day_of_week
+                  type: integer
+              - column:
+                  name: start_time
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: appointment_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: location_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recurrence_type
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: max_appointments_per_slot
+                  type: integer
+                  defaultValueNumeric: 1
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+
+  - changeSet:
+      id: 005
+      author: healthfirst
+      comment: Create availability_slots table
+      changes:
+        - createTable:
+            tableName: availability_slots
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: uuid_generate_v4()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: availability_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: slot_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_time
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  defaultValue: AVAILABLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: patient_id
+                  type: uuid
+              - column:
+                  name: patient_name
+                  type: varchar(100)
+              - column:
+                  name: patient_phone
+                  type: varchar(50)
+              - column:
+                  name: patient_email
+                  type: varchar(100)
+              - column:
+                  name: appointment_notes
+                  type: text
+              - column:
+                  name: is_available
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: checked_in
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reminder_sent
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reminder_sent_timestamp
+                  type: timestamp
+              - column:
+                  name: cancellation_reason
+                  type: varchar(500)
+              - column:
+                  name: cancellation_timestamp
+                  type: timestamp
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+
+  - changeSet:
+      id: 006
+      author: healthfirst
+      comment: Create refresh_tokens table
+      changes:
+        - createTable:
+            tableName: refresh_tokens
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: uuid_generate_v4()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: provider_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token_hash
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expires_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_revoked
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: device_type
+                  type: varchar(50)
+              - column:
+                  name: device_name
+                  type: varchar(100)
+              - column:
+                  name: app_version
+                  type: varchar(20)
+              - column:
+                  name: ip_address
+                  type: varchar(45)
+              - column:
+                  name: user_agent
+                  type: varchar(500)
+              - column:
+                  name: location_info
+                  type: text
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: last_used_at
+                  type: timestamp
+
+  - changeSet:
+      id: 007
+      author: healthfirst
+      comment: Create patient_refresh_tokens table
+      changes:
+        - createTable:
+            tableName: patient_refresh_tokens
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: uuid_generate_v4()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: patient_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token_hash
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: expires_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_revoked
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: device_type
+                  type: varchar(50)
+              - column:
+                  name: device_name
+                  type: varchar(100)
+              - column:
+                  name: device_fingerprint
+                  type: varchar(255)
+              - column:
+                  name: app_version
+                  type: varchar(20)
+              - column:
+                  name: operating_system
+                  type: varchar(100)
+              - column:
+                  name: browser
+                  type: varchar(100)
+              - column:
+                  name: ip_address
+                  type: varchar(45)
+              - column:
+                  name: user_agent
+                  type: varchar(500)
+              - column:
+                  name: location_info
+                  type: text
+              - column:
+                  name: session_start
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_activity
+                  type: timestamp
+              - column:
+                  name: activity_count
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: security_score
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_suspicious
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: revoked_at
+                  type: timestamp
+              - column:
+                  name: revoked_reason
+                  type: varchar(255)
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+
+  - changeSet:
+      id: 008
+      author: healthfirst
+      comment: Create patient_medical_history table
+      changes:
+        - createTable:
+            tableName: patient_medical_history
+            columns:
+              - column:
+                  name: patient_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: medical_condition
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: patient_medical_history
+            columnNames: patient_id, medical_condition 

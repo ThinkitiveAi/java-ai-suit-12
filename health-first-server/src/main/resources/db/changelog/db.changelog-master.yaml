@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001-initial-schema.yaml
+  - include:
+      file: db/changelog/changes/002-add-indexes.yaml
+  - include:
+      file: db/changelog/changes/003-add-foreign-keys.yaml
+  - include:
+      file: db/changelog/changes/004-add-missing-availability-slot-columns.yaml
+  - include:
+      file: db/changelog/changes/005-add-missing-provider-availability-columns.yaml
+  - include:
+      file: db/changelog/changes/006-create-provider-availability-excluded-dates.yaml 

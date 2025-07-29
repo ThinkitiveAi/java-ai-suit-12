@@ -19,7 +19,8 @@ import java.util.UUID;
     @Index(name = "idx_provider_phone", columnList = "phone_number"),
     @Index(name = "idx_provider_license", columnList = "license_number"),
     @Index(name = "idx_provider_active", columnList = "is_active"),
-    @Index(name = "idx_provider_verification", columnList = "verification_status")
+    @Index(name = "idx_provider_verification", columnList = "verification_status"),
+    @Index(name = "idx_provider_created", columnList = "created_at")
 })
 @EntityListeners(AuditingEntityListener.class)
 @Data
@@ -29,7 +30,7 @@ public class Provider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id")
     private UUID id;
 
     @NotBlank(message = "First name is required")
@@ -87,7 +88,7 @@ public class Provider {
     private ClinicAddress clinicAddress;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "verification_status", nullable = false)
+    @Column(name = "verification_status", length = 20, nullable = false)
     private VerificationStatus verificationStatus = VerificationStatus.PENDING;
 
     @Size(max = 500, message = "License document URL cannot exceed 500 characters")
@@ -102,20 +103,18 @@ public class Provider {
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Email verification fields
     @Column(name = "email_verified", nullable = false)
     private Boolean emailVerified = false;
 
-    @Column(name = "verification_token")
+    @Column(name = "verification_token", length = 255)
     private String verificationToken;
 
     @Column(name = "verification_token_expires_at")
     private LocalDateTime verificationTokenExpiresAt;
 
-    // Security fields for login attempts
     @Column(name = "failed_login_attempts", nullable = false)
     private Integer failedLoginAttempts = 0;
 
@@ -125,13 +124,12 @@ public class Provider {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
-    // Add new login tracking fields for enhanced security
     @Column(name = "login_count", nullable = false)
     private Integer loginCount = 0;
-    
+
     @Column(name = "last_failed_attempt")
     private LocalDateTime lastFailedAttempt;
-    
+
     @Column(name = "suspicious_activity_score", nullable = false)
     private Integer suspiciousActivityScore = 0;
 
@@ -139,16 +137,16 @@ public class Provider {
         PENDING, VERIFIED, REJECTED
     }
 
-    // Helper methods
+    // Business logic methods
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
     public boolean isAccountLocked() {
-        return lockedUntil != null && lockedUntil.isAfter(LocalDateTime.now());
+        return lockedUntil != null && LocalDateTime.now().isBefore(lockedUntil);
     }
 
     public boolean isVerificationTokenExpired() {
-        return verificationTokenExpiresAt == null || verificationTokenExpiresAt.isBefore(LocalDateTime.now());
+        return verificationTokenExpiresAt != null && LocalDateTime.now().isAfter(verificationTokenExpiresAt);
     }
 } 

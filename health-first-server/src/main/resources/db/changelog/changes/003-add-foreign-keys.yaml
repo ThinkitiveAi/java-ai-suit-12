@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 015
+      author: healthfirst
+      comment: Add foreign key constraints
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: provider_availability
+            baseColumnNames: provider_id
+            constraintName: fk_provider_availability_provider
+            referencedTableName: providers
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: availability_slots
+            baseColumnNames: availability_id
+            constraintName: fk_availability_slots_availability
+            referencedTableName: provider_availability
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: availability_slots
+            baseColumnNames: provider_id
+            constraintName: fk_availability_slots_provider
+            referencedTableName: providers
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: availability_slots
+            baseColumnNames: patient_id
+            constraintName: fk_availability_slots_patient
+            referencedTableName: patients
+            referencedColumnNames: id
+            onDelete: SET NULL
+        - addForeignKeyConstraint:
+            baseTableName: refresh_tokens
+            baseColumnNames: provider_id
+            constraintName: fk_refresh_tokens_provider
+            referencedTableName: providers
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: patient_refresh_tokens
+            baseColumnNames: patient_id
+            constraintName: fk_patient_refresh_tokens_patient
+            referencedTableName: patients
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: patient_medical_history
+            baseColumnNames: patient_id
+            constraintName: fk_patient_medical_history_patient
+            referencedTableName: patients
+            referencedColumnNames: id
+            onDelete: CASCADE 

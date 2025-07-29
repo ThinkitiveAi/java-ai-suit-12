@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006
+      author: healthfirst
+      comment: Create provider_availability_excluded_dates table
+      changes:
+        - createTable:
+            tableName: provider_availability_excluded_dates
+            columns:
+              - column:
+                  name: availability_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: excluded_date
+                  type: date
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: provider_availability_excluded_dates
+            columnNames: availability_id, excluded_date
+        - addForeignKeyConstraint:
+            baseTableName: provider_availability_excluded_dates
+            baseColumnNames: availability_id
+            constraintName: fk_excluded_dates_availability
+            referencedTableName: provider_availability
+            referencedColumnNames: id
+            onDelete: CASCADE 

@@ -1,0 +1,238 @@
+databaseChangeLog:
+  - changeSet:
+      id: 009
+      author: healthfirst
+      comment: Add indexes for providers table
+      changes:
+        - createIndex:
+            tableName: providers
+            indexName: idx_provider_email
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            tableName: providers
+            indexName: idx_provider_phone
+            columns:
+              - column:
+                  name: phone_number
+        - createIndex:
+            tableName: providers
+            indexName: idx_provider_license
+            columns:
+              - column:
+                  name: license_number
+        - createIndex:
+            tableName: providers
+            indexName: idx_provider_active
+            columns:
+              - column:
+                  name: is_active
+        - createIndex:
+            tableName: providers
+            indexName: idx_provider_verification
+            columns:
+              - column:
+                  name: verification_status
+        - createIndex:
+            tableName: providers
+            indexName: idx_provider_created
+            columns:
+              - column:
+                  name: created_at
+
+  - changeSet:
+      id: 010
+      author: healthfirst
+      comment: Add indexes for patients table
+      changes:
+        - createIndex:
+            tableName: patients
+            indexName: idx_patient_email
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            tableName: patients
+            indexName: idx_patient_phone
+            columns:
+              - column:
+                  name: phone_number
+        - createIndex:
+            tableName: patients
+            indexName: idx_patient_active
+            columns:
+              - column:
+                  name: is_active
+        - createIndex:
+            tableName: patients
+            indexName: idx_patient_created
+            columns:
+              - column:
+                  name: created_at
+        - createIndex:
+            tableName: patients
+            indexName: idx_patient_email_verified
+            columns:
+              - column:
+                  name: email_verified
+        - createIndex:
+            tableName: patients
+            indexName: idx_patient_phone_verified
+            columns:
+              - column:
+                  name: phone_verified
+
+  - changeSet:
+      id: 011
+      author: healthfirst
+      comment: Add indexes for availability_slots table
+      changes:
+        - createIndex:
+            tableName: availability_slots
+            indexName: idx_availability_slots_availability_id
+            columns:
+              - column:
+                  name: availability_id
+        - createIndex:
+            tableName: availability_slots
+            indexName: idx_availability_slots_provider_id
+            columns:
+              - column:
+                  name: provider_id
+        - createIndex:
+            tableName: availability_slots
+            indexName: idx_availability_slots_date_time
+            columns:
+              - column:
+                  name: slot_date
+              - column:
+                  name: start_time
+        - createIndex:
+            tableName: availability_slots
+            indexName: idx_availability_slots_status
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            tableName: availability_slots
+            indexName: idx_availability_slots_patient_id
+            columns:
+              - column:
+                  name: patient_id
+        - createIndex:
+            tableName: availability_slots
+            indexName: idx_availability_slots_is_available
+            columns:
+              - column:
+                  name: is_available
+
+  - changeSet:
+      id: 012
+      author: healthfirst
+      comment: Add indexes for provider_availability table
+      changes:
+        - createIndex:
+            tableName: provider_availability
+            indexName: idx_provider_availability_provider_id
+            columns:
+              - column:
+                  name: provider_id
+        - createIndex:
+            tableName: provider_availability
+            indexName: idx_provider_availability_date_range
+            columns:
+              - column:
+                  name: start_date
+              - column:
+                  name: end_date
+        - createIndex:
+            tableName: provider_availability
+            indexName: idx_provider_availability_day_of_week
+            columns:
+              - column:
+                  name: day_of_week
+        - createIndex:
+            tableName: provider_availability
+            indexName: idx_provider_availability_is_active
+            columns:
+              - column:
+                  name: is_active
+        - createIndex:
+            tableName: provider_availability
+            indexName: idx_provider_availability_created_at
+            columns:
+              - column:
+                  name: created_at
+
+  - changeSet:
+      id: 013
+      author: healthfirst
+      comment: Add indexes for refresh_tokens table
+      changes:
+        - createIndex:
+            tableName: refresh_tokens
+            indexName: idx_refresh_token_provider
+            columns:
+              - column:
+                  name: provider_id
+        - createIndex:
+            tableName: refresh_tokens
+            indexName: idx_refresh_token_hash
+            columns:
+              - column:
+                  name: token_hash
+        - createIndex:
+            tableName: refresh_tokens
+            indexName: idx_refresh_token_expires
+            columns:
+              - column:
+                  name: expires_at
+        - createIndex:
+            tableName: refresh_tokens
+            indexName: idx_refresh_token_revoked
+            columns:
+              - column:
+                  name: is_revoked
+
+  - changeSet:
+      id: 014
+      author: healthfirst
+      comment: Add indexes for patient_refresh_tokens table
+      changes:
+        - createIndex:
+            tableName: patient_refresh_tokens
+            indexName: idx_patient_refresh_token_patient
+            columns:
+              - column:
+                  name: patient_id
+        - createIndex:
+            tableName: patient_refresh_tokens
+            indexName: idx_patient_refresh_token_hash
+            columns:
+              - column:
+                  name: token_hash
+        - createIndex:
+            tableName: patient_refresh_tokens
+            indexName: idx_patient_refresh_token_expires
+            columns:
+              - column:
+                  name: expires_at
+        - createIndex:
+            tableName: patient_refresh_tokens
+            indexName: idx_patient_refresh_token_revoked
+            columns:
+              - column:
+                  name: is_revoked
+        - createIndex:
+            tableName: patient_refresh_tokens
+            indexName: idx_patient_refresh_token_device
+            columns:
+              - column:
+                  name: device_fingerprint
+        - createIndex:
+            tableName: patient_refresh_tokens
+            indexName: idx_patient_refresh_token_ip
+            columns:
+              - column:
+                  name: ip_address 
