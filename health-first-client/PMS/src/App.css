@@ -1,0 +1,18 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  background: #f5f5f5; /* Light gray background instead of image */
+  position: relative;
+}
+
+#root::before {
+  display: none; /* Remove the overlay */
+}
+
+@media (max-width: 600px) {
+  body {
+    background-position: center top;
+  }
+}
